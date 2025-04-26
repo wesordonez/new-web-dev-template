@@ -37,3 +37,5 @@ typing-extensions==4.13.2
 gunicorn==23.0.0
 
 phonenumbers==9.0.4
+
+wagtail==6.4.1

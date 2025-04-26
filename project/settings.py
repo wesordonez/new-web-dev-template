@@ -103,6 +103,20 @@ INSTALLED_APPS = [
     'tailwind',
     'corsheaders',
     'django_browser_reload',
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail',
+
+    'modelcluster',
+    'taggit',
 
     'styling',
 
@@ -142,6 +156,8 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware', #whitenoise
     'django_browser_reload.middleware.BrowserReloadMiddleware', # reload
     'django_ratelimit.middleware.RatelimitMiddleware',
+    
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware', # wagtail redirects
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -275,6 +291,15 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR.joinpath('media')
+MEDIA_URL = '/media/'
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
+
+# Wagtail settings
+
+WAGTAIL_SITE_NAME = PROJECT_TITLE + ' Admin '
+WAGTAILADMIN_BASE_URL = os.environ.get('WAGTAIL_URL') # for wagtail admin
+WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
 
 
 # GC_PROJECT_ID = env("PROJECT_ID") # google cloud project id

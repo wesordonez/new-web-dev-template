@@ -18,6 +18,10 @@ from .views import (rate_limiter_view, view_404,
 from .sitemaps import StaticSitemap
 from blog.sitemaps import BlogSitemap
 
+from wagtail.admin import urls as wagtailadmin_urls
+from wagtail import urls as wagtail_urls
+from wagtail.documents import urls as wagtaildocs_urls
+
 handler404 = view_404
 
 handler403 = handler_403
@@ -42,6 +46,11 @@ urlpatterns = [
     path('sitemap.xml', sitemap, sitemap_dict, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
     path('ratelimit-error/', rate_limiter_view, name='ratelimit-error'),
+    
+    # wagtail urls
+    path('cms/', include(wagtailadmin_urls)),
+    path('documents/', include(wagtaildocs_urls)),
+    path('pages/', include(wagtail_urls)),
 
     # add new path here
 
