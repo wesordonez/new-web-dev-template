@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     
     # Local apps
     'user',
+    'blog',
 ]
 
 TAILWIND_APP_NAME = 'styling'
