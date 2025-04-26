@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'tailwind',
     'styling',
     'django_browser_reload',
+    
+    # Local apps
+    'user',
 ]
 
 TAILWIND_APP_NAME = 'styling'
