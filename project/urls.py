@@ -16,7 +16,7 @@ from .views import (rate_limiter_view, view_404,
                         handler_403, home_view) #subscribe_view
 
 from .sitemaps import StaticSitemap
-from blog.sitemaps import BlogSitemap
+# from blog.sitemaps import BlogSitemap
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail import urls as wagtail_urls
@@ -32,14 +32,14 @@ admin.site.site_title = 'Admin site'
 admin.site.site_url = "" 
 
 
-sitemap_dict = {'sitemaps': {'static': StaticSitemap, 'blog': BlogSitemap}}
+sitemap_dict = {'sitemaps': {'static': StaticSitemap}}
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('user/', include('user.urls')),
-    path('blog/', include('blog.urls')),
+    path('blog/', include(wagtail_urls)),
     path('contact-us/', include('inquiry.urls')),
     
 

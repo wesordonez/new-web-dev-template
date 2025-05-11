@@ -1,46 +1,32 @@
+from wagtail.models import Page
+from wagtail.fields import RichTextField
+from wagtail.admin.panels import FieldPanel
 from django.db import models
-from django.template.defaultfilters import slugify
 
-from user.models import User
-from utils.common import generate_uniqueid
+class BlogIndexPage(Page):
+    intro = RichTextField(blank=True)
 
+    content_panels = Page.content_panels + [
+        FieldPanel('intro'),
+    ]
+    
+    def get_blog_pages(self):
+        return (
+            self.get_children()
+            .live()
+            .order_by('-first_published_at')
+            .specific()
+        )
 
-def generate_id():
-    # table =  apps.get_model('blog', 'Blog')
-    return generate_uniqueid(Blog, 'blog_id')
+class BlogPage(Page):
+    date = models.DateField("Post date")
+    intro = models.CharField(max_length=250)
+    body = RichTextField()
+    thumbnail = models.ImageField(upload_to='blogs/', null=True, blank=True)
 
-
-class Blog(models.Model):
-
-    blog_id = models.CharField(max_length=20, unique=True, blank=True, default=generate_id)
-
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-
-    thumbnail = models.ImageField(null=True, blank=True, upload_to='blogs/')
-
-    slug = models.SlugField(blank=True, unique=True)
-
-    title = models.CharField(max_length=200, default="", unique=True)  
-    body = models.TextField(null=True, blank=True)
-
-    draft = models.BooleanField(default=True, blank=True)
-    datetime = models.DateTimeField(auto_now=True) # stays at last updated
-
-    def __str__(self):
-        return self.title
-
-    def save(self, *args, **kwargs) -> None:
-        
-        if not self.slug:
-            self.slug = slugify(self.title)
-
-        return super().save(*args, **kwargs)
-
-
-class BlogImage(models.Model):
-
-    blog = models.ForeignKey(to=Blog, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='blogs/')
-
-    def __str__(self) -> str:
-        return f'{self.image.url}'
+    content_panels = Page.content_panels + [
+        FieldPanel('date'),
+        FieldPanel('intro'),
+        FieldPanel('body'),
+        FieldPanel('thumbnail'),
+    ]

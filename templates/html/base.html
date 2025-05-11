@@ -3,7 +3,7 @@
 {% load django_browser_reload %}
 
 {% load custom_tags %}
-
+{% load blog_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,7 +112,7 @@
                 <a class="header-links" href="{% url "home" %}">
                     About us
                 </a>
-                <a class="header-links" href="{% url "blogs" %}"
+                <a class="header-links" href="{% get_blog_index_url %}"
                         rel="noreferrer"
                         >
                     Blogs

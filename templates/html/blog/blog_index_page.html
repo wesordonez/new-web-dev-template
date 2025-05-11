@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load wagtailcore_tags %}
+
+{% block title %}Blogs - {% endblock title %}
+{% block description %}Contains list of all the published blogs{% endblock description %}
+
+{% block content %}
+<div class="flex flex-col h-full w-full place-items-center p-3 min-h-[100vh] md:px-[15%]">
+    <h1 class="w-full mt-[5%] text-3xl font-medium text-center">
+        {{ page.title }}
+    </h1>
+    {% if page.intro %}
+        <div class="w-full text-center mt-2 mb-4">
+            {{ page.intro|richtext }}
+        </div>
+    {% endif %}
+
+    {% with blog_pages=page.get_blog_pages %}
+        {% if blog_pages|length == 0 %}
+            <div class="w-full mt-[10%] flex flex-col text-center text-xl place-items-center">
+                <p class="text-xl">No blogs yet.</p>
+            </div>
+        {% endif %}
+        <div class="mt-[5%]"></div>
+        <div class="w-full max-w-[950px]">
+            {% for blog_page in blog_pages %}
+                <div class="flex gap-5 place-content-center mt-2 place-items-center max-md:flex-col">
+                    {% if blog_page.thumbnail %}
+                        <div class="max-w-[350px]">
+                            <img src="{{ blog_page.thumbnail.url }}">
+                        </div>
+                    {% endif %}
+                    <a href="{{ blog_page.url }}" class="text-md w-full h-full ">
+                        <div class="text-3xl w-full max-md:text-2xl mt-2">
+                            <h2>{{ blog_page.title }}</h2>
+                        </div>
+                        <div class="mt-4 mb-[2%] w-full p-2 text-justify">
+                            {{ blog_page.intro }}
+                        </div>
+                        <div class="text-sm text-gray-500 text-right">
+                            {{ blog_page.date }}
+                        </div>
+                    </a>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+    {% endwith %}
+</div>
+{% endblock content %}

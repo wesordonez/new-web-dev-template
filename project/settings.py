@@ -105,6 +105,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
+    'wagtail.contrib.legacy.richtext',
     'wagtail.embeds',
     'wagtail.sites',
     'wagtail.users',
@@ -202,6 +203,7 @@ TEMPLATES = [
             ],
             'libraries':{
                 'custom_tags': 'project.templatetags.custom_tags',
+                'blog_tags': 'blog.templatetags.blog_tags',
             }
         },
     },
